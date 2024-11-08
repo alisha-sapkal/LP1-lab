@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+pair<int, vector<int>> ks(int sw, const vector<int>& wt, const vector<int>& p, int n) {
+ vector<vector<int>> dp(n + 1, vector<int>(sw + 1, 0));
+ for (int i = 1; i <= n; ++i) {
+for (int w = 1; w <= sw; ++w) {
+if (wt[i - 1] <= w) dp[i][w] = max(dp[i - 1][w], dp[i - 1][w - wt[i - 1]] + p[i - 1]);
+else dp[i][w] = dp[i - 1][w];
+ }
+ }
+ vector<int> included(n, 0);
+ int w = sw;
+ for (int i = n; i > 0; --i) {
+ if (dp[i][w] != dp[i - 1][w]) {
+ included[i - 1] = 1;
+ w -= wt[i - 1];
+ }
+ }
+ return {dp[n][sw], included};
+}
+int main() {
+ int n, sw;
+ cout << "Enter the number of objects in a Knapsack: ";
+ cin >> n;
+ cout << "Enter the sack weight: ";
+ cin >> sw;
+ vector<int>wt;
+ vector<int>p;
+ for(int i=0; i<n; i++){
+ int w, pr;
+ cout << "enter the wieght and profit of objects: ";
+ cin >> w >> pr;
+ wt.push_back(w);
+ p.push_back(pr);
+ }
+ auto result = ks(sw, wt, p, n);
+ int max_value = result.first;
+ vector<int> included = result.second;
+ cout << "Maximum value in the knapsack: " << max_value << endl;
+ cout << "Objects included: ";
+ for (int i : included) { cout << i << " "; }
+ cout << endl;
+ return 0;
+}

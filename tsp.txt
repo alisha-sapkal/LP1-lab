@@ -1,0 +1,81 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<vector<int>> a(10, vector<int>(10));  // Cost matrix
+vector<int> visited(10, 0);                  // Visited cities
+int n, cost = 0;
+
+// Function to get input
+void get() {
+    cout << "Enter Number of Cities: ";
+    cin >> n;
+    cout << "\nEnter Cost matrix:\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Enter Elements of Row #" << i + 1 << ":\n";
+        for (int j = 0; j < n; j++) {
+            cin >> a[i][j];
+        }
+        visited[i] = 0;
+    }
+
+    // Display cost matrix
+    cout << "\nThe cost matrix is:\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            cout << "\t" << a[i][j];
+        }
+        cout << endl;
+    }
+}
+
+// Function to find the next city with the minimum cost
+int least(int c) {
+    int min = 999, kmin;
+    int nc = 999;
+    
+    for (int i = 0; i < n; i++) {
+        if ((a[c][i] != 0) && (visited[i] == 0)) {
+            if (a[c][i] + a[i][0] < min) {
+                min = a[c][i] + a[i][0];
+                kmin = a[c][i];
+                nc = i;
+            }
+        }
+    }
+    
+    if (min != 999) {
+        cost += kmin;
+    }
+    return nc;
+}
+
+// Recursive function to find minimum cost path
+void mincost(int city) {
+    visited[city] = 1;
+    cout << city + 1 << " -> ";
+    int ncity = least(city);
+    
+    if (ncity == 999) {
+        ncity = 0;
+        cout << ncity + 1;
+        cost += a[city][ncity];
+        return;
+    }
+    
+    mincost(ncity);
+}
+
+// Function to display the minimum cost
+void put() {
+    cout << "\n\nMinimum cost: " << cost << endl;
+}
+
+int main() {
+    get();
+    cout << "\n\nThe Path is:\n\n";
+    mincost(0);
+    put();
+    return 0;
+}

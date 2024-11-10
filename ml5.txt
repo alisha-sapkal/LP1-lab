@@ -20,7 +20,7 @@ x
 plt.title("Unclustered graph")
 plt.xlabel("Annual Income")
 plt.ylabel("Spending score")
-plt.scatter(x["Annual Income (k$)"], x["Spending score" (k$)])
+plt.scatter(x["Annual Income (k$)"], x["Spending score (k$)"])
 
 from sklearn.cluster import KMeans
 km = KMeans(n_clusters=3)

@@ -2,7 +2,7 @@
 import pandas as pd
 import csv 
 from mlxtend.preprocessing import TransactionEncoder
-from mlxtend.frequent_patterns import apriori association_rules
+from mlxtend.frequent_patterns import apriori, association_rules
 
 dataset = []
 #check the file name

@@ -54,7 +54,7 @@ labels = km.fit_predict(x)
 plt.title("CLustered data")
 plt.xlabel("Number of Clusters")
 plt.ylabel("yyy")
-plt.scatter(x["Annual Income (k$)"], x["Spending score" (k$)], c=labels)
+plt.scatter(x["Annual Income (k$)"], x["Spending score (k$)"], c=labels)
 
 cent = km.cluster_centers_
 plt.scatter(cent[:0], cent[:1], s=100,color="k")

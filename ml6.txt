@@ -14,7 +14,7 @@ dataset
 len(dataset)
 te = TransactionEncoder()
 x = te.fit_transform(dataset)
-x_test
+x
 df = pd.DataFrame(x, columns=te.columns_)
 df.head()
 

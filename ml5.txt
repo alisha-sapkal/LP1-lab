@@ -1,0 +1,60 @@
+import pandas as pd
+a=pd.read_csv('Mall_Customers.csv')
+a
+a.columns
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+print(a.isnull().sum())
+a.drop(['CustomerID'],axis=1,inplace=True)
+a.head()
+
+from sklearn.preprocessing import LabelEncoder
+from sklearn import metrics
+le = LabelEncoder()
+a["Genre"] = le.fit_transform(a["Genre"])
+a.head()
+
+x = a.iloc[:, 3:]
+x
+plt.title("Unclustered graph")
+plt.xlabel("Annual Income")
+plt.ylabel("Spending score")
+plt.scatter(x["Annual Income (k$)"], x["Spending score" (k$)])
+
+from sklearn.cluster import KMeans
+km = KMeans(n_clusters=3)
+km.fit_predict(x)
+km.inertia_
+wcss = []
+for k in range (1, 16):
+    km = KMeans(n_clusters=k)
+    km.fit_predict(x)
+    wcss.append(km_inertia_)
+
+plt.title("The Elbow Method")
+plt.xlabel('Number of Clusters')
+plt.ylabel('WCSS')
+plt.plot(range(1, 16), wcss, marker="o", color="red")
+
+from sklearn.metrics import silhouette_score
+silh = []
+for k in range (2, 16): 
+    km = KMeans(n_clusters=k)
+    labels = km.fit_predict(x)
+    score = silhouette_score(x, labels)
+    silh.append(score)
+
+plt.title('The Silhouette Method')
+plt.xlabel('Number of Clusters')
+plt.ylabel('WCSS')
+plt.bar(range(2, 16), silh, color="red")
+km = KMeans(n_clusters= 5, random_state=0)
+labels = km.fit_predict(x)
+plt.title("CLustered data")
+plt.xlabel("Number of Clusters")
+plt.ylabel("yyy")
+plt.scatter(x["Annual Income (k$)"], x["Spending score" (k$)], c=labels)
+
+cent = km.cluster_centers_
+plt.scatter(cent[:0], cent[:1], s=100,color="k")

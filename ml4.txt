@@ -1,0 +1,36 @@
+import pandas as pd
+a = pd.read_csv("Admission_Predict.csv")
+a
+a.head()
+a.tail()
+a.dtypes
+a.isnull().sum()
+a.columns
+
+from sklearn.preprocessing import Binarizer
+bi = Binarizer(threshold=0.75)
+a["Chance of Admit "] = bi.fit_transform(a[["Chance of Admit "]])
+a.head()
+
+x = a.drop("Chance of Admit ", axis=1)
+y = a["Chance of Admit "]
+y = y.astype("int")
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.25,random_state=0)
+
+from sklearn.tree import DecisionTreeClassifier
+cl = DecisionTreeClassifier(random_state=0)
+cl.fit(x_train,y_train)
+y_pred =cl.predict(x_test)
+
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score
+from sklearn.metrics import classification_report
+ConfusionMatrixDisplay.from_predictions(y_test,y_pred)
+accuracy_score(y_test, y_pred)
+print(classification_report(y_test, y_pred))
+
+from sklearn.tree import plot_tree
+import matplotlib.pyplot as plt
+plt.figure(figsize=(12, 12))
+plot_tree(cl, fontsize=8, filled=True, rounded=True, feature_names=x.columns, class_names=['NA', 'AD'])
